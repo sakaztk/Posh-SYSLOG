@@ -17,7 +17,7 @@
     "editor.insertSpaces": true,  // Default: true
 
     // When enabled, will trim trailing whitespace when you save a file.
-    "files.trimTrailingWhitespace": true,  // Default: false
+    "editor.trimAutoWhitespace": true, // Default: false
 
     // Does not reformat one-line code blocks, such as "if (...) {...} else {...}".
     "powershell.codeFormatting.ignoreOneLineBlock": false, // Default: True
@@ -44,5 +44,10 @@
     "powershell.codeFormatting.whitespaceBeforeOpenParen": true, // Default: True
 
     // Align assignment statements in a hashtable or a DSC Configuration.
-    "powershell.codeFormatting.alignPropertyValuePairs": true // Default: True
+    "powershell.codeFormatting.alignPropertyValuePairs": true,
+
+    "powershell.codeFormatting.autoCorrectAliases": true,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.codeFormatting.preset": "OTBS",
+    "git.alwaysSignOff": true
 }

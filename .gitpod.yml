@@ -4,3 +4,4 @@ image:
 vscode:
   extensions:
     - ms-vscode.powershell-preview@2020.3.0:BH3q0fz1Blfv+k9eeJ//ZA==
+    - davidanson.vscode-markdownlint@0.39.0:ixxSqTxD2d06+N5ugddwtg==
