@@ -71,3 +71,11 @@ RUN chmod a+x,o-w ${PS_INSTALL_FOLDER}/pwsh \
 RUN chown -R gitpod:gitpod /home/gitpod/.local
 
 USER gitpod
+
+RUN pwsh \
+        -NoLogo \
+        -NoProfile \
+        -Command " \
+          \$ErrorActionPreference = 'Stop' ; \
+          \install-module pester -force ; \
+          }"
