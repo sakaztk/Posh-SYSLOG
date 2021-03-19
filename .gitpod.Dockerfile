@@ -5,6 +5,8 @@ FROM gitpod/workspace-full:latest
 ARG PS_VERSION=7.1.0
 ARG PS_INSTALL_VERSION=7
 
+USER root
+
 # Copy only the files we need from the previous stage
 COPY --from=installer-env ["/opt/microsoft/powershell", "/opt/microsoft/powershell"]
 
