@@ -1,5 +1,6 @@
 FROM gitpod/workspace-full:latest
 
+USER root
 # Install dependencies and clean up
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
@@ -10,3 +11,5 @@ RUN apt-get update \
         iputils-tracepath \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+USER gitpod
