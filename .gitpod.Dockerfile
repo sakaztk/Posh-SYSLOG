@@ -56,10 +56,7 @@ RUN apt-get update \
 RUN chmod a+x,o-w ${PS_INSTALL_FOLDER}/pwsh \
     # Create the pwsh symbolic link that points to powershell
     && ln -s ${PS_INSTALL_FOLDER}/pwsh /usr/bin/pwsh
-
-USER gitpod
-# intialize powershell module cache and disable telemetry
-RUN export POWERSHELL_TELEMETRY_OPTOUT=1 \
+    && export POWERSHELL_TELEMETRY_OPTOUT=1 \
     && pwsh \
         -NoLogo \
         -NoProfile \
@@ -70,3 +67,7 @@ RUN export POWERSHELL_TELEMETRY_OPTOUT=1 \
             Write-Host "'Waiting for $env:PSModuleAnalysisCachePath'" ; \
             Start-Sleep -Seconds 6 ; \
           }"
+
+RUN chown -R gitpod:gitpod /home/gitpod/.local
+
+USER gitpod
