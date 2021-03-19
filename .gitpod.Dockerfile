@@ -1,46 +1,12 @@
+FROM mcr.microsoft.com/powershell/test-deps:ubuntu-20.04 AS installer-env
+
 FROM gitpod/workspace-full:latest
-
-USER root
-# Install dependencies and clean up
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
-        sudo \
-        curl \
-        wget \
-        iputils-ping \
-        iputils-tracepath \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-
-# Define Args for the needed to add the package
-ARG PS_VERSION=6.2.4
-ARG PS_PACKAGE=powershell-${PS_VERSION}-linux-x64.tar.gz
-ARG PS_PACKAGE_URL=https://github.com/PowerShell/PowerShell/releases/download/v${PS_VERSION}/${PS_PACKAGE}
-ARG PS_INSTALL_VERSION=7
-
-# Download the Linux tar.gz and save it
-ADD ${PS_PACKAGE_URL} /tmp/linux.tar.gz
-
-RUN echo ${PS_PACKAGE_URL}
-
-# define the folder we will be installing PowerShell to
-ENV PS_INSTALL_FOLDER=/opt/microsoft/powershell/$PS_INSTALL_VERSION
-
-# Create the install folder
-RUN mkdir -p ${PS_INSTALL_FOLDER}
-
-# Unzip the Linux tar.gz
-RUN tar zxf /tmp/linux.tar.gz -C ${PS_INSTALL_FOLDER}
-
-# Start a new stage so we lose all the tar.gz layers from the final image
-#FROM ubuntu:20.04 AS powershell
 
 ARG PS_VERSION=7.1.0
 ARG PS_INSTALL_VERSION=7
 
 # Copy only the files we need from the previous stage
-#COPY --from=installer-env ["/opt/microsoft/powershell", "/opt/microsoft/powershell"]
+COPY --from=installer-env ["/opt/microsoft/powershell", "/opt/microsoft/powershell"]
 
 # Define Args and Env needed to create links
 ARG PS_INSTALL_VERSION=7
@@ -57,6 +23,10 @@ ENV PS_INSTALL_FOLDER=/opt/microsoft/powershell/$PS_INSTALL_VERSION \
 # Install dependencies and clean up
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
+    # from powershell/powershell environment
+        git \
+        procps \
+        lsb-release \
     # less is required for help in powershell
         less \
     # requied to setup the locale
@@ -79,7 +49,6 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && locale-gen $LANG && update-locale
-
 
 # Give all user execute permissions and remove write permissions for others
 RUN chmod a+x,o-w ${PS_INSTALL_FOLDER}/pwsh \
