@@ -77,4 +77,4 @@ RUN pwsh \
         -NoProfile \
         -Command " \
           \$ErrorActionPreference = 'Stop' ; \
-          \install-module pester -force ;"
+          install-module pester -force ;"
