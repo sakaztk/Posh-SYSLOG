@@ -81,6 +81,22 @@ RUN apt-get update \
     && locale-gen $LANG && update-locale
 
 
-
+# Give all user execute permissions and remove write permissions for others
+RUN chmod a+x,o-w ${PS_INSTALL_FOLDER}/pwsh \
+    # Create the pwsh symbolic link that points to powershell
+    && ln -s ${PS_INSTALL_FOLDER}/pwsh /usr/bin/pwsh \
+    # intialize powershell module cache
+    # and disable telemetry
+    && export POWERSHELL_TELEMETRY_OPTOUT=1 \
+    && pwsh \
+        -NoLogo \
+        -NoProfile \
+        -Command " \
+          \$ErrorActionPreference = 'Stop' ; \
+          \$ProgressPreference = 'SilentlyContinue' ; \
+          while(!(Test-Path -Path \$env:PSModuleAnalysisCachePath)) {  \
+            Write-Host "'Waiting for $env:PSModuleAnalysisCachePath'" ; \
+            Start-Sleep -Seconds 6 ; \
+          }"
 
 USER gitpod
