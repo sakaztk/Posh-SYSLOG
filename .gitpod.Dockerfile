@@ -34,7 +34,7 @@ RUN mkdir -p ${PS_INSTALL_FOLDER}
 RUN tar zxf /tmp/linux.tar.gz -C ${PS_INSTALL_FOLDER}
 
 # Start a new stage so we lose all the tar.gz layers from the final image
-FROM ubuntu:20.04 AS powershell
+#FROM ubuntu:20.04 AS powershell
 
 ARG PS_VERSION=7.1.0
 ARG PS_INSTALL_VERSION=7
