@@ -1,9 +1,6 @@
-FROM mcr.microsoft.com/powershell/test-deps:ubuntu-20.04 AS installer-env
+FROM mcr.microsoft.com/powershell:latest AS installer-env
 
 FROM gitpod/workspace-full:latest
-
-ARG PS_VERSION=7.1.0
-ARG PS_INSTALL_VERSION=7
 
 USER root
 
@@ -20,7 +17,7 @@ ENV PS_INSTALL_FOLDER=/opt/microsoft/powershell/$PS_INSTALL_VERSION \
     LANG=en_US.UTF-8 \
     # set a fixed location for the Module analysis cache
     PSModuleAnalysisCachePath=/var/cache/microsoft/powershell/PSModuleAnalysisCache/ModuleAnalysisCache \
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-Ubuntu-20.04
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker
 
 # Install dependencies and clean up
 RUN apt-get update \
