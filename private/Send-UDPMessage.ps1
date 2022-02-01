@@ -32,10 +32,12 @@
                    HelpMessage = 'Byte array containing the datagram to be sent')]
         [ValidateNotNullOrEmpty()]
         [byte[]]
-        $Datagram
+        $Datagram,
+
+        [Text.Encoding]$Encoding = [Text.Encoding]::ASCII
     )
 
-    Write-Verbose -Message ([Text.Encoding]::ASCII.GetString($Datagram))
+    Write-Verbose -Message ($Encoding.GetString($Datagram))
 
     $null = $UdpClient.Send($Datagram, $Datagram.Length)
 }

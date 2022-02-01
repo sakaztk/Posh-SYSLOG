@@ -211,15 +211,14 @@ Function Send-SyslogMessage
                    ValueFromPipelineByPropertyName  = $true,
                    ParameterSetName                 = 'RFC3164')]
         [switch]
-        $RFC3164
+        $RFC3164,
+
+        [Text.Encoding]$Encoding = [Text.Encoding]::ASCII
     )
 
     Begin
     {
         Write-Debug -Message 'Starting the BEGIN block...'
-
-        # Create an ASCII Encoding object
-        $Encoding = [Text.Encoding]::ASCII
 
         # Initiate the required network objects
         Switch ($Transport)
